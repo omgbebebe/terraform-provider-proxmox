@@ -162,9 +162,9 @@ func runCommand(
 	}
 
 	cmd.Wait()
-	if cmd.ExitStatus != 0 {
+	if cmd.ExitStatus() != 0 {
 		err = fmt.Errorf(
-			"Command %q exited with non-zero exit status: %d", cmd.Command, cmd.ExitStatus)
+			"Command %q exited with non-zero exit status: %d", cmd.Command, cmd.ExitStatus())
 	}
 
 	// Wait for output to clean up

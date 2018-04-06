@@ -2,7 +2,7 @@ package proxmox
 
 import (
 	"fmt"
-	pxapi "github.com/Telmate/proxmox-api-go/proxmox"
+	pxapi "github.com/omgbebebe/proxmox-api-go/proxmox"
 	"github.com/hashicorp/terraform/helper/schema"
 	"log"
 	"path"
@@ -77,11 +77,11 @@ func resourceVmQemu() *schema.Resource {
 			},
 			"nic": {
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
 			},
 			"bridge": {
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
 			},
 			"vlan": {
 				Type:     schema.TypeInt,
@@ -267,6 +267,10 @@ func resourceVmQemuCreate(d *schema.ResourceData, meta interface{}) error {
 		if err != nil {
 			return err
 		}
+
+	case "alt":
+		// give sometime to bootup
+		time.Sleep(9 * time.Second)
 
 	default:
 		return fmt.Errorf("Unknown os_type: %s", d.Get("os_type").(string))

@@ -3,7 +3,7 @@ package proxmox
 import (
 	"context"
 	"fmt"
-	pxapi "github.com/Telmate/proxmox-api-go/proxmox"
+	pxapi "github.com/omgbebebe/proxmox-api-go/proxmox"
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/terraform"
 	"time"
@@ -16,7 +16,7 @@ func Provisioner() terraform.ResourceProvisioner {
 				Type:     schema.TypeString,
 				Required: true,
 			},
-			"net1": &schema.Schema{
+			"net0": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 			},
@@ -60,7 +60,7 @@ func applyFn(ctx context.Context) error {
 		}
 		time.Sleep(10 * time.Second)
 		vmParams := map[string]string{
-			"net1": data.Get("net1").(string),
+			"net0": data.Get("net0").(string),
 		}
 		_, err = client.SetVmConfig(vmr, vmParams)
 		time.Sleep(10 * time.Second)
